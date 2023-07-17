@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "作業一";
+}
+
+<div class="text-center">
+    <h5>作業一 - 改用 jQuery 完成JSON資料讀取並顯示在表格中的練習</h5>
+    <hr />
+    <p>
+        <table id="employeesTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>年資</th>
+                    <th>薪水</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </p>
+</div>
+
+@section Scripts{
+    <script>
+       const emp={
+          "employees" : [
+          { "name" : "Tom" , "workYears" : 3, "salary" : 35000 },
+          { "name" : "Jack" , "workYears" : 5, "salary" : 40000 },
+          { "name" : "Mary" , "workYears" : 7, "salary" : 45000 }
+       ]};
+
+       
+       //const datas = emp.employees.map(TheEmp=>{
+       //     const { name, workYears, salary } = TheEmp;
+       //         return(`
+       //             <tr>
+       //               <td>${name}</td>
+       //               <td>${workYears}</td>
+       //               <td>${salary}</td>
+       //             </tr>`)
+       //     })            
+       //document.querySelector('#employeesTable>tbody').innerHTML = datas.join("");
+             
+
+       $.each(emp.employees, function (index,value){
+            //console.log("姓名 :" + value.name)
+            //console.log("年資 :" + value.workYears)
+            //console.log("薪水 :" + value.salary)
+            $('#employeesTable > tbody').append(
+                $('<tr>')
+                    .append($('<td>' + value.name + '</td>'))
+                    .append($('<td>' + value.workYears + '</td>'))
+                    .append($('<td>' + value.salary + '</td>'))           
+            )
+
+        })
+    </script>
+}

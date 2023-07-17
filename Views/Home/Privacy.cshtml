@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "作業二";
+}
+
+<div class="text-center">
+    <h5>作業二 - 引用 datas/Travel.js 中的JSON，讀取資料後，透過 bootstrap cards component 顯示在網頁上</h5>
+    <hr />
+    <div class="row">
+
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/Travel.js"></script>
+    <script>
+        //var datas = spots.CommonFormat.Section
+        //datas => array
+        //console.log(datas[0])
+        const data = spots.CommonFormat.Section.map(item => {
+            const imgs = item.file.img;
+            let img;
+            if (Array.isArray(imgs)) {
+                img = imgs[0];
+            } else {
+                img = imgs;
+            }
+            //console.log(img);
+            let wording = item.xbody.substr(0, 100);
+            const { CAT2, stitle, xbody, file } = item;
+            return (`<div class="card  mx-2 my-2" style="width: 18rem;">
+                               <img src="${img.text}" class="card-img-top " style="height:10rem" alt="${img.description}">
+                               <div class="card-body">
+                                        <h6 class="card-title">(${CAT2}) - ${stitle}</h6>
+                                        <p class="text-star">${wording}</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+
+                    </div>
+                    `)
+        });
+        document.querySelector('.text-center>.row').innerHTML = data.join("");
+               
+
+    </script>
+
+
+}

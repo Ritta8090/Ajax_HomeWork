@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "作業四";
+}
+
+<div class="text-center">
+    <h5>作業四 - 試著做做看 PPT42 住址連動的功能</h5>
+    <hr />
+    <div>
+    <select id="selectCity1">
+        <option value="請選擇">請選擇</option>
+    </select>
+    <select id="selectCity2">
+        <option value="請選擇">請選擇</option>
+    </select>
+    <select id="selectCity3">
+        <option value="請選擇">請選擇</option>
+    </select>
+    </div>
+    @section Scripts{
+        <script>
+            const xhr = new XMLHttpRequest();
+            xhr.open('get', '/api/cities');
+            xhr.send();
+
+            xhr.addEventListener('load', () => {
+                const datas = JSON.parse(xhr.responseText);
+                //console.log(datas);
+                //console.log(JSON.parse(datas));
+                var cities = datas.map(city => {
+                    return (`<option value="${city}">${city}</option>`)
+                })
+                //console.log(cities);
+                document.querySelector('#selectCity1').innerHTML = cities.join("");
+            })
+
+        </script>
+
+    }
+</div>
