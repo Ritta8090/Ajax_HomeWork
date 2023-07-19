@@ -6,32 +6,78 @@
     <h5>作業四 - 試著做做看 PPT42 住址連動的功能</h5>
     <hr />
     <div>
-    <select id="selectCity1">
+    <select id="selectCity">
         <option value="請選擇">請選擇</option>
     </select>
-    <select id="selectCity2">
+        <select id="selectDistrict">
         <option value="請選擇">請選擇</option>
     </select>
-    <select id="selectCity3">
+        <select id="selectRoad">
         <option value="請選擇">請選擇</option>
     </select>
     </div>
     @section Scripts{
         <script>
-            const xhr = new XMLHttpRequest();
-            xhr.open('get', '/api/cities');
-            xhr.send();
+            const selCity = document.querySelector('#selectCity');
+            const selDistrict = document.querySelector('#selectDistrict');
+            const selRoad = document.querySelector('#selectRoad');
 
-            xhr.addEventListener('load', () => {
-                const datas = JSON.parse(xhr.responseText);
-                //console.log(datas);
-                //console.log(JSON.parse(datas));
-                var cities = datas.map(city => {
-                    return (`<option value="${city}">${city}</option>`)
+            function LoadCities() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('get', '/api/cities');
+                xhr.send();
+
+                xhr.addEventListener('load', () => {
+                    const datas = JSON.parse(xhr.responseText);
+               
+                    var cities = datas.map(city => {
+                        return (`<option value="${city}">${city}</option>`)
+                    })
+                    //console.log(cities);
+                    //document.querySelector('#selectCity1').innerHTML = cities.join("");
+                    selCity.innerHTML = cities.join("");
+                    LoadDistricts();
                 })
-                //console.log(cities);
-                document.querySelector('#selectCity1').innerHTML = cities.join("");
+            }
+            function LoadDistricts() {
+                const city = selCity.options[selCity.selectedIndex].value;
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', `/api/districts?city=${city}`);
+                xhr.send();
+
+                xhr.addEventListener('load', () => {
+                    const datas = JSON.parse(xhr.responseText);
+                    var districts = datas.map(district => {
+                        return (`<option value="${district}">${district}</option>`)
+                    })
+                    selDistrict.innerHTML = districts.join("");
+                    LoadRoads();
+                })
+            }
+
+            function LoadRoads() {
+                const district = selDistrict.options[selDistrict.selectedIndex].value;
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', `/api/roads?SiteId=${district}`);
+                xhr.send();
+
+                xhr.addEventListener('load', () => {
+                    const datas = JSON.parse(xhr.responseText);
+                    var roads = datas.map(road => {
+                        return (`<option value="${road}">${road}</option>`)
+                    })
+                    selRoad.innerHTML = roads.join("");
+                })
+            }
+
+            LoadCities();
+
+            selCity.addEventListener('change', () => {
+                LoadDistricts()
             })
+            selDistrict.addEventListener('change', () => {
+                LoadRoads();
+            });
 
         </script>
 

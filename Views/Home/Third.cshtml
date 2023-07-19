@@ -12,5 +12,37 @@
     </ul>
     </div>
     <hr />
-    <p>???</p>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6 ">
+                <form method="Post" action="~/api/register" name="formRegister">
+                    <div class="mb-3">
+                        <label for="InputUserName" class="form-label">姓名</label>
+                        <input type="text" class="form-control" id="InputUserName" name="Name" />
+                        <div id="nameHelp" class="form-text"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="InputEmail" class="form-label">電子郵件</label>
+                        <input type="email" class="form-control" id="InputEmail" name="Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="InputAge" class="form-label">年紀</label>
+                        <input type="number" class="form-control" id="InputAge" name="Age">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">選擇檔案</label>
+                        <input class="form-control" type="file" id="formFile" name="Photo">
+                    </div>
+                    <div>
+                       
+                    </div>
+                    @*<button type="submit" class="btn btn-primary">Submit</button>*@
+                    <button class="btn btn-primary" id="buttonSubmit">Submit</button>
+                </form>
+                <div id="div1" class="alert alert-secondary mt-3"></div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
 </div>
